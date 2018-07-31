@@ -2277,7 +2277,7 @@ def main(args):
 
     if chunk_count < procs: chunks = procs
 
-    pool = mp.Pool(processes=procs, maxtasksperchild=50)
+    pool = mp.Pool(processes=procs, maxtasksperchild=1)
 
     checkref(args.bwaref)
 
