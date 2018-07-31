@@ -2292,7 +2292,7 @@ def main(args):
 
     if chunk_count < procs: chunks = procs
 
-    pool = mp.Pool(processes=procs)
+    pool = mp.Pool(processes=procs, maxtasksperchild=1000)
 
     genome = Genome(args.bwaref + '.fai', skip_chroms)
 
@@ -2333,9 +2333,9 @@ def main(args):
                     res = pool.apply_async(disco_run_chunk, [args, chunk])
                     reslist.append(res)
 
-                # clean up
-                pool.close()
-                pool.join()
+                # # clean up
+                # pool.close()
+                # pool.join()
 
                 ins_list = []
                 for res in reslist:
@@ -2376,9 +2376,9 @@ def main(args):
                 res = pool.apply_async(disco_run_chunk, [args, chunk])
                 reslist.append(res)
 
-            # clean up
-            pool.close()
-            pool.join()
+            # # clean up
+            # pool.close()
+            # pool.join()
 
             ins_list = []
             for res in reslist:
@@ -2412,9 +2412,9 @@ def main(args):
         res = pool.apply_async(run_chunk, [args, bamlist, exp_rpkm, chunk[0], chunk[1], chunk[2]])
         reslist.append(res)
 
-    # clean up
-    pool.close()
-    pool.join()
+    # # clean up
+    # pool.close()
+    # pool.join()
 
     insertions = []
     for res in reslist:
