@@ -2271,6 +2271,14 @@ def main(args):
 
     logger.info("commandline: %s" % ' '.join(sys.argv))
 
+    ''' Start pools first before loading data. Otherwise they may end up being copied internally.'''
+    procs = int(args.processes)
+    chunk_count = int(args.chunks)
+
+    if chunk_count < procs: chunks = procs
+
+    pool = mp.Pool(processes=procs, maxtasksperchild=1000)
+
     checkref(args.bwaref)
 
     if not args.skipshm:
@@ -2287,12 +2295,12 @@ def main(args):
             for line in _:
                 skip_chroms[line.strip().split()[0]] = True
 
-    procs = int(args.processes)
-    chunk_count = int(args.chunks)
+    # procs = int(args.processes)
+    # chunk_count = int(args.chunks)
 
-    if chunk_count < procs: chunks = procs
+    # if chunk_count < procs: chunks = procs
 
-    pool = mp.Pool(processes=procs, maxtasksperchild=1000)
+    # pool = mp.Pool(processes=procs, maxtasksperchild=1000)
 
     genome = Genome(args.bwaref + '.fai', skip_chroms)
 
