@@ -29,6 +29,8 @@ from bx.intervals.intersection import Intersecter, Interval # pip install bx-pyt
 
 import profile
 
+# Added 15/08/18
+import gc
 
 #######################################
 ## Classes                           ##
@@ -1987,6 +1989,9 @@ def run_chunk(args, bamlist, exp_rpkm, chrom, start, end):
         sys.stderr.write('*'*60 + '\nencountered error in chunk: %s\n' % chunkname)
         traceback.print_exc(file=sys.stderr)
         sys.stderr.write("*"*60 + "\n")
+
+        # Added 15/08/18:
+        gc.collect()
 
         return []
 
